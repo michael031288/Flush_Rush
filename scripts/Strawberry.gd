@@ -7,15 +7,16 @@ const SURFACE_JUMP := -420.0
 const GRAVITY := 980.0
 const WATER_GRAVITY := 90.0
 
-@onready var sprite: Sprite2D = $Sprite
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var sensor: Area2D = $Sensor
 @onready var camera: Camera2D = $Camera2D
 @onready var trail: CPUParticles2D = $Trail
 @onready var bubbles: CPUParticles2D = $Bubbles
 
-var tex_idle: Texture2D
-var tex_swim: Texture2D
-var tex_jump: Texture2D
+const IDLE_CELL := Vector2(50, 66)
+const RUN_CELL := Vector2(56, 68)
+const SWIM_CELL := Vector2(83, 66)
+
 var rainbow_mat: ShaderMaterial
 
 var in_water := false
@@ -27,13 +28,14 @@ var jump_buf := 0.0
 var dying := false
 var facing := 1.0
 var _was_in_water := false
+var _current_anim := ""
 
 
 func _ready() -> void:
 	add_to_group("player")
-	tex_idle = preload("res://assets/sprites/strawberry.png")
-	tex_swim = preload("res://assets/sprites/strawberry_swim.png")
-	tex_jump = preload("res://assets/sprites/strawberry_jump.png")
+	sprite.sprite_frames = _build_sprite_frames()
+	sprite.play("idle")
+	_current_anim = "idle"
 	rainbow_mat = ShaderMaterial.new()
 	rainbow_mat.shader = preload("res://shaders/rainbow.gdshader")
 	sensor.area_entered.connect(_on_area_entered)
@@ -43,6 +45,54 @@ func _ready() -> void:
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 6.0
 	_setup_particles()
+
+
+func _build_sprite_frames() -> SpriteFrames:
+	var frames := SpriteFrames.new()
+	if frames.has_animation("default"):
+		frames.remove_animation("default")
+
+	_add_sheet_frames(
+		frames, "idle",
+		preload("res://assets/sprites/strawberry_idle.png"),
+		4, IDLE_CELL, 5.0, true
+	)
+	_add_sheet_frames(
+		frames, "run",
+		preload("res://assets/sprites/strawberry_run.png"),
+		6, RUN_CELL, 11.0, true
+	)
+	_add_sheet_frames(
+		frames, "swim",
+		preload("res://assets/sprites/strawberry_swim_sheet.png"),
+		4, SWIM_CELL, 6.0, true
+	)
+
+	frames.add_animation("jump")
+	frames.set_animation_loop("jump", false)
+	frames.set_animation_speed("jump", 1.0)
+	frames.add_frame("jump", preload("res://assets/sprites/strawberry_jump.png"))
+
+	return frames
+
+
+func _add_sheet_frames(
+		frames: SpriteFrames,
+		anim_name: String,
+		texture: Texture2D,
+		count: int,
+		cell: Vector2,
+		speed: float,
+		loop: bool
+	) -> void:
+	frames.add_animation(anim_name)
+	frames.set_animation_loop(anim_name, loop)
+	frames.set_animation_speed(anim_name, speed)
+	for i in count:
+		var atlas := AtlasTexture.new()
+		atlas.atlas = texture
+		atlas.region = Rect2(i * cell.x, 0, cell.x, cell.y)
+		frames.add_frame(anim_name, atlas)
 
 
 func _setup_particles() -> void:
@@ -245,19 +295,18 @@ func _update_sensor_mask() -> void:
 
 
 func _update_visuals(_delta: float) -> void:
+	var anim := "idle"
 	if in_water:
-		sprite.texture = tex_swim
-	elif not is_on_floor() and not in_water:
-		sprite.texture = tex_jump
-	else:
-		sprite.texture = tex_idle
+		anim = "swim"
+	elif not is_on_floor():
+		anim = "jump"
+	elif abs(velocity.x) > 8.0:
+		anim = "run"
+	_set_anim(anim)
 
 	sprite.flip_h = facing < 0.0
-	var bob := sin(Time.get_ticks_msec() * 0.008) * (3.0 if in_water else 1.4)
-	if is_on_floor() or in_water:
-		sprite.position.y = bob
-	else:
-		sprite.position.y = 0.0
+	sprite.position.y = 0.0
+	sprite.speed_scale = 1.35 if GameManager.power == GameManager.Power.SPEED and anim == "run" else 1.0
 
 	if GameManager.power == GameManager.Power.INVINCIBLE:
 		sprite.material = rainbow_mat
@@ -273,3 +322,10 @@ func _update_visuals(_delta: float) -> void:
 
 	trail.emitting = GameManager.power == GameManager.Power.SPEED
 	bubbles.emitting = in_water
+
+
+func _set_anim(name: String) -> void:
+	if _current_anim == name:
+		return
+	_current_anim = name
+	sprite.play(name)

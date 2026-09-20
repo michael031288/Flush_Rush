@@ -160,6 +160,31 @@ def make_bob_frames(src_path: Path, dest_name: str, height: int, n: int = 4) -> 
     print(f"sheet {dest_name}: {sheet.size} cells={n}x1 {cell_w}x{cell_h}")
 
 
+def make_run_frames(src_path: Path, dest_name: str, height: int, n: int = 6) -> None:
+    """Horizontal walk/run cycle with bounce, lean, and squash."""
+    base = Image.open(src_path).convert("RGBA")
+    base = fit_height(base, height)
+    cell_w, cell_h = base.width + 14, height + 12
+    sheet = Image.new("RGBA", (cell_w * n, cell_h), (0, 0, 0, 0))
+    for i in range(n):
+        frame = Image.new("RGBA", (cell_w, cell_h), (0, 0, 0, 0))
+        phase = i / n * math.pi * 2
+        bob = int(round(math.sin(phase * 2.0) * 4.0))
+        lean = int(round(math.sin(phase) * 4.0))
+        squash = 1.0 - abs(math.sin(phase * 2.0)) * 0.07
+        stretch_x = 1.0 + abs(math.sin(phase)) * 0.05
+        fw = max(1, int(base.width * stretch_x))
+        fh = max(1, int(base.height * squash))
+        scaled = base.resize((fw, fh), Image.Resampling.LANCZOS)
+        x = (cell_w - fw) // 2 + lean
+        y = cell_h - fh - 4 + bob
+        frame.alpha_composite(scaled, (x, max(0, y)))
+        sheet.paste(frame, (i * cell_w, 0))
+    out = SPR / dest_name
+    sheet.save(out)
+    print(f"sheet {dest_name}: {sheet.size} cells={n}x1 {cell_w}x{cell_h}")
+
+
 def pset(draw: ImageDraw.ImageDraw, x: int, y: int, c: tuple, s: int = 1) -> None:
     draw.rectangle([x, y, x + s - 1, y + s - 1], fill=c)
 
@@ -504,6 +529,7 @@ def main() -> None:
     process_sprite("ghost_item.png", "power_ghost.png", 28)
 
     make_bob_frames(SPR / "strawberry.png", "strawberry_idle.png", 56, 4)
+    make_run_frames(SPR / "strawberry.png", "strawberry_run.png", 56, 6)
     make_bob_frames(SPR / "strawberry_swim.png", "strawberry_swim_sheet.png", 56, 4)
 
     copy_ui("intro_butterfly.png", "intro_1.png", (1280, 720))
