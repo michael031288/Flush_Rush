@@ -38,11 +38,13 @@ func _gui_input(event: InputEvent) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if locked:
+	if locked or not is_inside_tree():
 		return
 	if event.is_pressed() and (event is InputEventKey or event is InputEventJoypadButton):
 		_advance()
-		get_viewport().set_input_as_handled()
+		var vp := get_viewport()
+		if vp:
+			vp.set_input_as_handled()
 
 
 func _show_title() -> void:

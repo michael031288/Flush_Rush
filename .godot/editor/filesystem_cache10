@@ -1,5 +1,5 @@
 78098b89c88a74ebe8c20117b8754620
-::res://::1789913763
+::res://::1789914968
 gemini-code-1789912204181.md::TextFile::-1::1789912204::0::1::::<><><>0<>0<><>::
 ::res://assets/::1789913155
 ::res://assets/audio/::1789913767
@@ -13,7 +13,7 @@ hurt.wav::AudioStreamWAV::2428164438416397352::1789913363::1789913767::1::::<><>
 jump.wav::AudioStreamWAV::7922578878449353649::1789913363::1789913767::1::::<><><>0<>0<>07d8cfcc4f6bc1f9d87370aec6ae260a<>res://.godot/imported/jump.wav-7ea4d93114fa52c0b9979f6b2117f13f.sample::
 splash.wav::AudioStreamWAV::3742254398354588645::1789913363::1789913767::1::::<><><>0<>0<>127a50d425a39706dbce08445876dd7a<>res://.godot/imported/splash.wav-5ec4fd8293fbd42c27becff16a2e488f.sample::
 victory.wav::AudioStreamWAV::3420678811437703490::1789913363::1789913767::1::::<><><>0<>0<>1af136b2db95375751ac0ea3ebf871b1<>res://.godot/imported/victory.wav-d893d32ad919f27e15cf04d35e288b78.sample::
-::res://assets/sprites/::1789913767
+::res://assets/sprites/::1789914715
 bat.png::CompressedTexture2D::8375120136908934922::1789913350::1789913767::1::::<><><>0<>0<>edd57bf462422f96092cf0a9b6efe90a<>res://.godot/imported/bat.png-999a3b8c364ad8eed0221c763440cff1.ctex::
 bg_sewer.png::CompressedTexture2D::7070865309671806404::1789913363::1789913767::1::::<><><>0<>0<>55b160d374b25eca79f909aeb30db440<>res://.godot/imported/bg_sewer.png-3e36eb30d5ba213da31092db50b68a74.ctex::
 carrot.png::CompressedTexture2D::5372441003670692425::1789913356::1789913767::1::::<><><>0<>0<>7c6db07d31496408169c57ce3e9c66f1<>res://.godot/imported/carrot.png-179ed2be2b0600bbd74cf58a5cafe016.ctex::
@@ -29,6 +29,7 @@ slime.png::CompressedTexture2D::4847354710862627154::1789913352::1789913766::1::
 strawberry.png::CompressedTexture2D::2461787477893065189::1789913341::1789913766::1::::<><><>0<>0<>840199288973ae9d0e2159b53788d021<>res://.godot/imported/strawberry.png-0d961d7edcb4b19cdfc864532475c1df.ctex::
 strawberry_idle.png::CompressedTexture2D::1260773527988213676::1789913362::1789913766::1::::<><><>0<>0<>e3ae5c283199c05379892df05f47544b<>res://.godot/imported/strawberry_idle.png-378716b8a222620f9fceabf30b4f693b.ctex::
 strawberry_jump.png::CompressedTexture2D::6865895586749586574::1789913345::1789913766::1::::<><><>0<>0<>0d76db1881d0bea78aebb31314e11323<>res://.godot/imported/strawberry_jump.png-c99af8c0697e7ddc7b1f885e9e2c8252.ctex::
+strawberry_run.png::CompressedTexture2D::6473635477726533712::1789914715::1789914969::1::::<><><>0<>0<>0707c8f890c376681f05122155c7dbd2<>res://.godot/imported/strawberry_run.png-4eb469e6fde8c0bffc565058840e7de1.ctex::
 strawberry_swim.png::CompressedTexture2D::565150595146436616::1789913343::1789913766::1::::<><><>0<>0<>4c989e45584b5561baef9f403f54b62f<>res://.godot/imported/strawberry_swim.png-db3498d2dbbfee18d6bffaf85b00649b.ctex::
 strawberry_swim_sheet.png::CompressedTexture2D::7880629375095979356::1789913362::1789913766::1::::<><><>0<>0<>a0b26e26f73612320bd3aa3da2f6990a<>res://.godot/imported/strawberry_swim_sheet.png-f6bc94c99d197c4bc10667a309f4eda2.ctex::
 tileset.png::CompressedTexture2D::5704814266743292688::1789913915::1789913919::1::::<><><>0<>0<>cfa53a3dffe81b5bb7833d5188e31046<>res://.godot/imported/tileset.png-b50fc1806457686cf91872f682d34a54.ctex::
@@ -46,7 +47,7 @@ Bat.tscn::PackedScene::-1::1789913637::0::1::::<><><>0<>0<><>::res://scripts/Bat
 BossGator.tscn::PackedScene::-1::1789913640::0::1::::<><><>0<>0<><>::res://scripts/BossGator.gd<>res://assets/sprites/gator.png
 Eel.tscn::PackedScene::-1::1789913634::0::1::::<><><>0<>0<><>::res://scripts/Eel.gd<>res://assets/sprites/eel.png
 Slime.tscn::PackedScene::-1::1789913632::0::1::::<><><>0<>0<><>::res://scripts/Slime.gd<>res://assets/sprites/slime.png
-Strawberry.tscn::PackedScene::-1::1789913629::0::1::::<><><>0<>0<><>::res://scripts/Strawberry.gd<>res://assets/sprites/strawberry.png
+Strawberry.tscn::PackedScene::-1::1789914731::0::1::::<><><>0<>0<><>::res://scripts/Strawberry.gd
 ::res://scenes/levels/::1789913676
 Level1.tscn::PackedScene::-1::1789913676::0::1::::<><><>0<>0<><>::res://scripts/Level1.gd
 ::res://scenes/objects/::1789913651
@@ -73,11 +74,11 @@ MysteryBox.gd::GDScript::2263566307064734040::1789913448::0::1::::<>Area2D<><>0<
 Pickup.gd::GDScript::7303480938794907273::1789913739::0::1::::<>Area2D<><>0<>0<><>::
 Slime.gd::GDScript::4070901293885454099::1789913456::0::1::::<>Area2D<><>0<>0<><>::
 SlimeProjectile.gd::GDScript::7673995746470637688::1789913473::0::1::::<>Area2D<><>0<>0<><>::
-Strawberry.gd::GDScript::5311137144692400790::1789913559::0::1::::<>CharacterBody2D<><>0<>0<><>::
+Strawberry.gd::GDScript::5311137144692400790::1789914745::0::1::::<>CharacterBody2D<><>0<>0<><>::
 VictoryScreen.gd::GDScript::9129185376214928844::1789913514::0::1::::<>Control<><>0<>0<><>::
 WaterZone.gd::GDScript::6902906642374796513::1789913442::0::1::::<>Area2D<><>0<>0<><>::
 ::res://shaders/::1789913766
 rainbow.gdshader::Shader::8469726783533608853::1789913252::0::1::::<><><>0<>0<><>::
 water.gdshader::Shader::8022485506749881916::1789913253::0::1::::<><><>0<>0<><>::
 ::res://tools/::1789913915
-::res://tools/__pycache__/::1789913915
+::res://tools/__pycache__/::1789914715
