@@ -17,6 +17,10 @@ run/main_scene="res://scenes/ui/IntroCutscene.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://assets/sprites/icon.png"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_mcp_bridge/plugin.cfg")
+
 [autoload]
 
 GameManager="*res://scripts/GameManager.gd"
